@@ -19,22 +19,22 @@ $(document).ready(function () {
     $(".screens.screen2").css("display", "flex");
   });
   var coins = 0;
-  var username;
+  var uname;
   $(".pokecoins-wrapp a").click(function (e) {
     e.preventDefault();
     $(this).parent().animateCss("heartBeat");
     var n = $(this).attr("data-num");
-    var html = $('.pokecoins-wrapp a[data-num="' + n + '"]').html();
+    var content = $('.pokecoins-wrapp a[data-num="' + n + '"]').html();
     //var src = $(imgs[n - 1]).attr('src');
     if ($(window).width() > 768) {
-      username = $('input[name="username"]').val();
+      uname = $('input[name="username"]').val();
     } else {
       var un = $('input[name="username"]');
-      username = $(un[1]).val();
+      uname = $(un[1]).val();
     }
     setTimeout(function () {
-      $(".pokecoins-info .icon").html("<center>" + html + "</center>");
-      $(".pokecoins-info .username").text(username);
+      $(".pokecoins-info .icon").html("<center>" + content + "</center>");
+      $(".pokecoins-info .username").text(uname);
       $(".screens.screen2").css("display", "none");
       $(".screens.screen3").css("display", "flex");
     }, 100);
@@ -52,7 +52,7 @@ $(document).ready(function () {
         $(".loader-text-wrapp .text").html("User verification...");
         setTimeout(function () {
           $(".loader-text-wrapp .text").html(
-            '<span class="text-success">' + username + " verified!</span>"
+            '<span class="text-success">' + uname + " verified!</span>"
           );
           setTimeout(function () {
             $(".loader-text-wrapp .text").html(
@@ -67,8 +67,8 @@ $(document).ready(function () {
     }, 3500);
   });
 });
-var coinNums = [100, 550, 1200, 2500, 5200, 14500];
-var platforms = ["iOS", "Android"];
+var cnums = [100, 550, 1200, 2500, 5200, 14500];
+var devices = ["iOS", "Android"];
 
 var users = [
   "ShadowTigerClaw",
@@ -1324,15 +1324,15 @@ function openGenerator() {
 
 var timeOutNum = 0;
 var interval;
-var html;
+var content;
 
 var generateTemplate = function () {
-  var userID = rand(0, users.length);
-  var coinNum = rand(0, coinNums.length - 1);
+  var userID = randomgenerator(0, users.length);
+  var coinNum = randomgenerator(0, cnums.length - 1);
 
-  var platformId = rand(0, platforms.length - 1);
+  var deviceid = randomgenerator(0, devices.length - 1);
 
-  timeOutNum = rand(2000, 5000);
+  timeOutNum = randomgenerator(2000, 5000);
   var totalActivity = $(".single-act");
   if (totalActivity.length >= 9) {
     //return false;
@@ -1341,49 +1341,49 @@ var generateTemplate = function () {
     timeOutNum = 0;
   }
 
-  html =
+  content =
     '<div class="col-12 col-sm-6 col-md-4 col-lg-4 single-act mb-4 animated bounceIn">';
-  html += '<div class="single p-3">';
-  html += '<div class="text-left username mb-3 font-bold">';
-  html += "<span>" + users[userID] + "</span>";
-  html += "</div>";
-  html +=
+  content += '<div class="single p-3">';
+  content += '<div class="text-left uname mb-3 font-bold">';
+  content += "<span>" + users[userID] + "</span>";
+  content += "</div>";
+  content +=
     '<div class="d-flex flex-row justify-content-between align-items-center">';
-  html += '<div class="text-left coins">';
-  html +=
+  content += '<div class="text-left coins">';
+  content +=
     '<img src="https://images.squarespace-cdn.com/content/v1/5f25fcd0e5db813a8d2eb9eb/1597852444367-316R8PBPTWAPIQXROSC0/coin+logo.png" width="30" class="vc_coin-icon-sm"> <span>' +
-    coinNums[coinNum] +
+    cnums[coinNum] +
     " CP</span>";
-  html += "</div>";
-  html += '<div class="text-right platforms">';
-  html += platforms[platformId];
-  html += "</div>";
-  html += "</div>";
-  html += "</div>";
-  html += "</div>";
+  content += "</div>";
+  content += '<div class="text-right devices">';
+  content += devices[deviceid];
+  content += "</div>";
+  content += "</div>";
+  content += "</div>";
+  content += "</div>";
 
-  $(".recent-activity .row").prepend(html);
+  $(".recent-activity .row").prepend(content);
 
   clearInterval(interval);
   interval = setInterval(generateTemplate, timeOutNum);
 };
 interval = setInterval(generateTemplate, timeOutNum);
 
-function rand(min, max) {
+function randomgenerator(min, max) {
   if (max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   } else {
     return Math.floor(Math.random() * (min + 1));
   }
 }
-var audioElement = document.createElement("audio");
+var sounditem = document.createElement("audio");
 
 $('button[name="proceed"]').click(function () {
   var error = false;
-  audioElement.setAttribute("src", "assets/voices/process.mp3");
-  audioElement.pause();
-  audioElement.currentTime = 0;
-  audioElement.play();
+  sounditem.setAttribute("src", "assets/voices/process.mp3");
+  sounditem.pause();
+  sounditem.currentTime = 0;
+  sounditem.play();
   var i = $('input[name="username"]').val();
   if (!i) {
     $(".input-name-wrapp").animateCss("shake");
@@ -1430,10 +1430,10 @@ $("#contactform").submit(function (e) {
   e.preventDefault();
   var that = this;
   var s = $(this).serialize();
-  var username = $('input[name="uname"]').val();
+  var uname = $('input[name="uname"]').val();
   var email = $('input[name="email"]').val();
   var message = $('textarea[name="message"]').val();
-  if (!message || !email || !username) {
+  if (!message || !email || !uname) {
     $("#error").html(
       '<div class="alert alert-danger text-center">All fields are required!</div>'
     );
@@ -1456,18 +1456,18 @@ $("#contactform").submit(function (e) {
 
 function getPoints(that) {
   coinId = $(that).attr("data-num");
-  var username = $('input[name="username"]').val();
-  var platform = $('select[name="platform"]').val();
+  var uname = $('input[name="username"]').val();
+  var device = $('select[name="platform"]').val();
   var region = $('select[name="region"]').val();
-  $("#generate .pc-details .coins span").text(coinNums[coinId]);
+  $("#generate .pc-details .coins span").text(cnums[coinId]);
 
-  if (platform == "psn") {
+  if (device == "psn") {
     var p = "PS4";
   }
-  if (platform == "xbl") {
+  if (device == "xbl") {
     var p = "XBOX ONE";
   }
-  if (platform == "pc") {
+  if (device == "pc") {
     var p = "PC";
   }
   $("#pcModal").modal("hide");
@@ -1476,44 +1476,47 @@ function getPoints(that) {
   $.ajax({
     method: "POST",
     url: "actions/api.php",
-    data: { name: username, platform: platform },
+    data: { name: uname, platform: device },
     dataType: "JSON",
     success: function (res) {
       if (res.status != "error") {
-        var h = '<div class="text-center avatar">';
-        h += '<img src="' + res.user.avatar + '">';
-        h += "</div>";
-        h += '<div class="row m-0">';
-        h += '<div class="col-4 p-0">';
-        h += '<div class="detailed wins">';
-        h +=
+        var content2 = '<div class="text-center avatar">';
+        content2 += '<img src="' + res.user.avatar + '">';
+        content2 += "</div>";
+        content2 += '<div class="row m-0">';
+        content2 += '<div class="col-4 p-0">';
+        content2 += '<div class="detailed wins">';
+        content2 +=
           '<div class="wins-icon icon"><svg aria-hidden="true" data-prefix="fal" data-icon="trophy" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-trophy fa-w-18 fa-5x"><path fill="currentColor" d="M448 64V12c0-6.6-5.4-12-12-12H140c-6.6 0-12 5.4-12 12v52H12C5.4 64 0 69.4 0 76v61.6C0 199.7 68.1 272 160.7 285.7c29.4 60.7 73.7 90.3 111.3 96.9V480h-86c-14.4 0-26 11.7-26 26.1 0 3.3 2.7 5.9 6 5.9h244c3.3 0 6-2.6 6-5.9 0-14.4-11.6-26.1-26-26.1h-86v-97.4c37.7-6.6 81.9-36.2 111.3-96.9C508 272 576 199.6 576 137.6V76c0-6.6-5.4-12-12-12H448zM32 137.6V96h96v24c0 51.8 7 94.9 18.5 130.2C77.9 232.5 32 178 32 137.6zM288 352c-72 0-128-104-128-232V32h256v88c0 128-56 232-128 232zm256-214.4c0 40.4-46 94.9-114.5 112.6C441 214.9 448 171.8 448 120V96h96v41.6z" class=""></path></svg></div>';
-        h += '<div class="title">Wins</div>';
-        h += '<div class="wins-count count">' + res.stats.wins + "</div>";
-        h += "</div>";
-        h += "</div>";
-        h += '<div class="col-4 p-0">';
-        h += '<div class="detailed kills">';
-        h +=
+        content2 += '<div class="title">Wins</div>';
+        content2 +=
+          '<div class="wins-count count">' + res.stats.wins + "</div>";
+        content2 += "</div>";
+        content2 += "</div>";
+        content2 += '<div class="col-4 p-0">';
+        content2 += '<div class="detailed kills">';
+        content2 +=
           '<div class="kills-icon icon"><svg aria-hidden="true" data-prefix="fal" data-icon="user-alt-slash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="svg-inline--fa fa-user-alt-slash fa-w-20 fa-5x"><path fill="currentColor" d="M637 485.2L23 1.8C19.6-1 14.5-.4 11.8 3l-10 12.5C-1 19-.4 24 3 26.8l614 483.5c3.4 2.8 8.5 2.2 11.2-1.2l10-12.5c2.8-3.6 2.2-8.6-1.2-11.4zM320 32c61.8 0 112 50.2 112 112 0 34.8-16.3 65.6-41.3 86.2l25.6 20.2C445.4 224 464 186.3 464 144 464 64.5 399.5 0 320 0c-54.6 0-101.4 30.7-125.9 75.4l25.4 20C237.7 58 275.7 32 320 32zM96 480v-32c0-52.9 43.1-96 96-96h36.8c22.4 0 40.3 16 91.2 16 11.7 0 23.3-1.1 34.8-3.1l-36.9-29.1c-46.2-.6-59.3-15.8-89.2-15.8H192c-70.7 0-128 57.3-128 128v32c0 17.7 14.3 32 32 32h445.6L501 480H96z" class=""></path></svg></div>';
-        h += '<div class="title">Kills</div>';
-        h += '<div class="kills-count count">' + res.stats.kills + "</div>";
-        h += "</div>";
-        h += "</div>";
-        h += '<div class="col-4 p-0">';
-        h += '<div class="detailed rank">';
-        h +=
+        content2 += '<div class="title">Kills</div>';
+        content2 +=
+          '<div class="kills-count count">' + res.stats.kills + "</div>";
+        content2 += "</div>";
+        content2 += "</div>";
+        content2 += '<div class="col-4 p-0">';
+        content2 += '<div class="detailed rank">';
+        content2 +=
           '<div class="rank-icon icon"><svg aria-hidden="true" data-prefix="fal" data-icon="medal" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="svg-inline--fa fa-medal fa-w-18 fa-5x"><path fill="currentColor" d="M332.37 275.41l-19.75-40.05c-9.44-18.81-39.91-18.86-49.28.08l-19.72 39.97-44.06 6.44c-10.44 1.5-18.94 8.67-22.22 18.7-3.25 10.02-.59 20.83 6.97 28.17l31.91 31.09-7.56 43.92c-3.91 22.74 20.25 39.5 39.87 28.97L288 411.97l39.44 20.72c19.35 10.13 43.87-5.88 39.91-28.95l-7.56-43.92 31.91-31.09c7.56-7.34 10.22-18.16 6.97-28.17-3.28-10.03-11.78-17.19-22.19-18.7l-44.11-6.45zm-6.96 73.25l8.84 51.45-46.25-24.3-46.34 24.91 8.94-52.06-37.41-36.47 51.69-7.53L288 257.78l23.12 46.88 51.69 7.53-37.4 36.47zM559.97 0H402.12c-11.24 0-21.66 5.9-27.44 15.54L288 160 201.32 15.54A31.997 31.997 0 0 0 173.88 0H16.03C3.08 0-4.5 14.57 2.92 25.18l144.12 205.88C125.14 260.4 112 296.65 112 336c0 97.05 78.95 176 176 176s176-78.95 176-176c0-39.35-13.14-75.6-35.04-104.94L573.08 25.18C580.5 14.57 572.92 0 559.97 0zM46.76 32h127.12l78.93 131.55c-31.95 6.51-60.65 21.84-83.78 43.13L46.76 32zM432 336c0 79.53-64.47 144-144 144s-144-64.47-144-144 64.47-144 144-144 144 64.47 144 144zm-25.03-129.32c-23.13-21.29-51.83-36.62-83.78-43.13L402.12 32h127.12L406.97 206.68z" class=""></path></svg></div>';
-        h += '<div class="title">Rank</div>';
-        h += '<div class="rank-count count">' + res.stats.rankxp + "</div>";
-        h += "</div>";
-        h += "</div>";
-        h += "</div>";
+        content2 += '<div class="title">Rank</div>';
+        content2 +=
+          '<div class="rank-count count">' + res.stats.rankxp + "</div>";
+        content2 += "</div>";
+        content2 += "</div>";
+        content2 += "</div>";
 
-        $("#more-details").html(h);
+        $("#more-details").html(content2);
       }
-      $("#personalInfo .name span, #verification .name span").text(username);
-      $("#personalInfo .count span").text(coinNums[coinId]);
+      $("#personalInfo .name span, #verification .name span").text(uname);
+      $("#personalInfo .count span").text(cnums[coinId]);
       $("#personalInfo .platform span").text(p);
       $("#personalInfo .region span").text(region);
       $(".preloader-pulse").css("display", "none");
@@ -1523,15 +1526,15 @@ function getPoints(that) {
 }
 
 $("#generate_btn").click(function () {
-  var c = parseInt(coinNums[coinId]) * 1000;
+  var c = parseInt(cnums[coinId]) * 1000;
   $("#personalInfo").modal("hide");
   //$('#verification').modal('show');
-  //plusCount(c, 0);
+  //addcount(c, 0);
 
-  audioElement.setAttribute("src", "assets/voices/process.mp3");
-  audioElement.pause();
-  audioElement.currentTime = 0;
-  audioElement.play();
+  sounditem.setAttribute("src", "assets/voices/process.mp3");
+  sounditem.pause();
+  sounditem.currentTime = 0;
+  sounditem.play();
   $(".preloader").show();
   $("header, nav, main, footer").css(
     "filter",
@@ -1553,7 +1556,7 @@ $("#generate_btn").click(function () {
         $("#loader span").css("width", "88%");
         setTimeout(function () {
           $(".preloader .p-text").html(
-            '<span class="text-danger">Suspicious activity detected!</span>'
+            '<span class="text-danger">Suspicious activity detected!<br><i class="bi bi-exclamation-triangle text-danger font-bold text-xl"></i><br> Please Complete The Human Verification.</span>'
           );
           setTimeout(function () {
             $(".preloader, #loader, .p-text").hide();
@@ -1565,21 +1568,21 @@ $("#generate_btn").click(function () {
   }, 3500);
 });
 
-var plusCount = function (sum, start) {
+var addcount = function (sum, start) {
   var ns = start + 1000;
   if (start < sum) {
     console.log(ns);
-    plusCount(sum, ns);
+    addcount(sum, ns);
   }
 };
-var movementStrength = 15;
-var height = movementStrength / $(window).height();
-var width = movementStrength / $(window).width();
+var movePower = 15;
+var ht = movePower / $(window).height();
+var wdth = movePower / $(window).width();
 $("body").mousemove(function (e) {
   var pageX = e.pageX - $(window).width() / 2;
   var pageY = e.pageY - $(window).height() / 2;
-  var newvalueX = width * pageX * -1 - 25;
-  var newvalueY = height * pageY * -1 - 50;
+  var newvalueX = wdth * pageX * -1 - 25;
+  var newvalueY = ht * pageY * -1 - 50;
   $("#home .soldier").css("margin-left", newvalueX + "px");
   $("#home .soldier").css("margin-top", newvalueY + "px");
 });
